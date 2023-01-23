@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">   
+ <meta name  = "viewport" content = "width=device-width,initial-scale=1.0">
+ 
+ <style>
+     
+    *{
+    margin:0;
+    padding:0;
+    font-family: 'Poppins', sans-serif;
+    user-select:none;
+}
+.main{
+        background:#8A2BE2;
+        width:100vw;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+ }
+
+.intro-page{
+    background:white;
+    width:100vw;
+    height:100vh;
+    position:absolute;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:1;
+    font-size:23px;
+    color:#8A2BE2;    
+}
+#intro-h1{
+    animation:fade-out .7s linear 2s;
+}
+@keyframes fade-out{
+    from{
+        opacity:1;
+    }
+    to{
+        opacity:0;
+    }
+}
+.result{
+    position:absolute;
+    display:flex;
+    flex-direction:column;
+    width:100vw;
+    height:100vh;
+    z-index:1;
+    top:-100vh;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:#f5f5f5;
+    padding:10px;
+    box-sizing:border-box;
+}
+.animate-down{
+    animation:down .4s linear 2s forwards;
+}
+@keyframes down{     
+    100%{
+        top:0;
+    }
+}
+.animate-up{
+    animation:up .3s linear forwards;
+}
+@keyframes up{
+    0%{
+        top:0;
+    }
+    100%{
+        top:-100vh;
+    }
+}
+.result p{
+    margin:5px 0 25px 0;
+    font-size:17px;
+    color:grey;
+}
+.result h1{
+    font-size:45px;
+    color:#202020;
+}
+.result button{
+    padding:15px 10px;
+    font-size:18px;
+    width:170px;
+    border:none;
+    background:#8A2BE2;
+    border-radius:10px;
+    font-weight:bold;
+    color:white;
+}
+.result button:active{
+    color:#f0f0f0;
+}
+.background{
+    width:95vw;
+    position:relative;
+    background:white;
+    box-sizing:border-box;
+    padding:35px 15px;
+    border-radius:10px;
+}
+.background h3{
+    text-align:center;
+    margin-bottom:15px;
+    font-size:20px;
+    color:#202020;
+}
+.categories{
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+.cat-btn{
+    flex-basis:32%;
+    height:55px;
+    color:#383838;
+    border:3px solid #383838;
+    border-radius:15px;    
+    font-size:15px;
+    font-weight:bold;
+    background:#F0F0F0;
+}
+.hangman-pic{
+    height:190px;
+    margin:auto;
+    position:relative;
+}
+.stick-around{
+    width:10px;
+    height:10px;
+    background:#202020;
+    position:absolute;
+}
+.stick-around:nth-child(1){
+    height:50px;
+    width:10px;
+    left:calc(50% - 5px);
+}
+.stick-around:nth-child(2){    
+    width:50%;
+}
+.stick-around:nth-child(3){    
+    height:100%;    
+}
+.stick-around:nth-child(4){
+    bottom:0;
+    width:100%;
+}
+.stick-around:nth-child(5){
+    bottom:0;
+    right:0;
+    height:50px;
+}
+.hangman{
+    position:relative;
+    width:100px;
+    height:130px;
+    display:flex;
+    justify-content:center;
+    left:50%;
+    top:15px;
+    transform:translateX(-50%);   
+}
+.hbody{
+    position:absolute;
+    background:grey;
+    width:5px;
+}
+.head{
+    width:40px;
+    height:40px;
+    border:5px solid grey;
+    border-radius:50%;
+    background:white;
+}
+.b{
+    height:45px;
+    top:47.5px;
+}
+.hands{
+    height:30px;
+    top:62.5px;
+}
+.hands.one{
+    transform:rotate(60deg);
+    transform-origin:top left;
+}
+.hands.two{
+    transform:rotate(-60deg);
+    transform-origin:top right;
+}
+.dead .hands{
+    transition:transform .3s linear .3s;
+}
+.legs{
+    top:92.5px;
+    height:50px;
+}
+.legs.one{
+    transform:rotate(45deg);
+    transform-origin:top right;
+}
+.legs.two{
+    transform:rotate(-45deg);
+    transform-origin:top left;
+}
+.dead .legs{
+    transition:transform .3s linear .3s;
+}
+.hangman.dead{
+    top:30px;
+    transition:top .2s linear;
+}
+.dead .head{
+    transform-origin:bottom;
+    transform:rotate(35deg);   
+    transition:transform .3s linear .2s;
+}
+.dead .hands.one{
+    transform:rotate(35deg);
+}
+.dead .hands.two{
+    transform:rotate(-35deg);
+}
+.dead .legs.one{
+    transform:rotate(20deg);
+}
+.dead .legs.two{
+    transform:rotate(-20deg);
+}
+.output-div{
+    height:80px;
+    display:none;
+    font-weight:bold;
+    font-size:28px;
+    color:#595959;
+}
+.letter{
+    margin:0 2px;
+    transition:.3s linear;
+}
+.btn-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:5px;
+}
+.btn-row:nth-child(5){
+    justify-content:center;
+}
+.btn-row:nth-child(5) .char-btns{
+    width:50px;
+    margin:0 1px;
+}
+.keyboard{
+    display:none;
+}
+.char-btns{
+    width:50px;
+    height:35px;
+    border:2px solid #202020;
+    border-radius:5px;
+    background:#ff4137;
+    color:white;
+    font-weight:bold;
+    font-size:16px;
+}
+.disable-btn{
+    opacity:.4;
+}
+.selected-cat{
+    opacity:1;
+    color:white;
+    background:#8A2BE2;
+}
+.playing{
+    padding:20px 15px;
+}
+.playing h3{
+    display:none;
+}
+.playing .hbody{
+    visibility:hidden;
+}
+.playing .output-div{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.playing .keyboard{
+    display:block;
+}
+.kb-disable{
+    visibility:hidden;
+}
+.playing .hbody.display{
+    visibility:visible;
+}
+.output-div.correct{
+    color:green;
+}
+.output-div.incorrect .letter-shown{
+    color:red;
+}     
+     
+ </style>
+ 
+    </head>
+    
+        
+    <body>
+
+    <div id = "intro-pg" class = "intro-page">
+        <h1 id = "intro-h1">HangMan</h1>
+    </div>
+    
+    <div id = "resultdiv" class = "result">
+    
+        <div>
+        
+            <h1 id = "res"></h1>
+            <p>The correct word was <b id = "c-word"></b></p>
+            
+            <button id = "again-btn">Play again</button>
+        </div>
+        
+        
+    </div>
+    
+    <div class = "main">
+    
+    <div id = "bg" class = "background">  
+    
+    <h3>Please select a category</h3>
+    
+    <div class = "categories">
+        <button id = "fruits" class = "cat-btn">Fruits</button>
+        <button id = "animals" class = "cat-btn">Animals</button>
+        <button id = "countries" class = "cat-btn">Countries</button>
+    </div>  
+      
+        <div class = "hangman-pic">
+            
+            <div class = "stick-around"></div>
+            <div class = "stick-around"></div>
+            <div class = "stick-around"></div>
+            <div class = "stick-around"></div>
+            <div class = "stick-around"></div>
+            
+         <div class = "hangman" id = "hangman-body">
+         
+            <div class = "hbody head"></div>     
+            <div class = "hbody b"></div>
+            <div class = "hbody hands one"></div>
+            <div class = "hbody hands two"></div>   
+            <div class = "hbody legs one"></div>
+            <div class = "hbody legs two"></div>     
+             
+        </div>
+                                            
+        </div>    
+        
+        <div id = "output" class = "output-div"></div>
+        
+        <div class = "keyboard">
+            
+            <div class = "btn-row">
+               
+                <button id = "a" class = "char-btns">A</button>
+                <button id = "b" class = "char-btns">B</button>
+                <button id = "c" class = "char-btns">C</button>
+                <button id = "d" class = "char-btns">D</button>
+                <button id = "e" class = "char-btns">E</button>
+                <button id = "f" class = "char-btns">F</button>
+                               
+            </div>
+            
+            <div class = "btn-row">                  
+                <button id = "g" class = "char-btns">G</button>
+                <button id = "h" class = "char-btns">H</button> 
+                <button id = "i" class = "char-btns">I</button>
+                <button id = "j" class = "char-btns">J</button> 
+                <button id = "k" class = "char-btns">K</button>
+                <button id = "l" class = "char-btns">L</button>                                      
+            </div>
+                        
+            <div class = "btn-row">
+                <button id = "m" class = "char-btns">M</button>
+                <button id = "n" class = "char-btns">N</button>
+                <button id = "o" class = "char-btns">O</button>  
+                <button id = "p" class = "char-btns">P</button> 
+                <button id = "q" class = "char-btns">Q</button>
+                <button id = "r"  class = "char-btns">R</button>                                                  
+            </div>
+            
+            <div class = "btn-row">               
+                <button id = "s" class = "char-btns">S</button>
+                <button id = "t" class = "char-btns">T</button>
+                <button id = "u" class = "char-btns">U</button>
+                <button id = "v" class = "char-btns">V</button>
+                <button id = "w" class = "char-btns">W</button>
+                <button id = "x" class = "char-btns">X</button>                                 
+            </div>
+                        
+            <div class = "btn-row">
+                <button id = "y" class = "char-btns">Y</button>
+                <button id = "z" class = "char-btns">Z</button>                  
+            </div>
+                                                
+        </div>
+                 
+    </div>
+    
+    </div>
+                        
+    </body>
+    
+    <script>
+        
+          const namesData = {
+        fruits:[
+        "Apple",
+        "Apricot", 
+        "Avocado", 
+        "Banana",    
+        "Blackberry", 
+        "Blueberry", 
+        "Boysenberry", 
+        "Cactus", 
+         "Cranberry",
+         "Currant", 
+         "Date", 
+         "Dragonfruit",
+         "Elderberry", 
+         "Fig",
+         "Gooseberry", 
+         "Grape",
+         "Guava",
+         "Honeydew",  
+         "Huckleberry",
+         "Jackfruit", 
+         "Jambul", 
+         "Kumquat", 
+         "Lemon", 
+         "Lime", 
+         "Longan",
+         "Lychee",
+         "Mango", 
+         "Mulberry", 
+         "Nectarine",
+         "Orange",
+         "Papaya",
+         "Passionfruit",
+         "Peach",
+         "Pear", 
+         "Pineapple",
+         "Plum", 
+         "Pomegranate", 
+         "Quince",
+         "Raspberry", 
+         "Redcurrant",
+         "Starfruit",
+         "Strawberry",
+         "Tangerine", 
+         "Uglifruit", 
+         "Watermelon",
+         "Whitecurrant",
+         "Blackcurrant", 
+         "Blacksapote",
+         "Bloodorange", 
+         "Cantaloupe", 
+         "Cherry",
+         "Clementine",
+         "Cranberry",
+         "Custardapple",
+        ],
+      animals:[
+    "Lion",
+    "Tiger",
+    "Bear",
+    "Elephant",
+    "Giraffe",
+    "Zebra",
+    "Hippopotamus",
+    "Rhinoceros",
+    "Gorilla",
+    "Chimpanzee",
+    "Monkeys",
+    "Crocodile",
+    "Alligator",
+    "Snake",
+    "Lizard",
+    "Iguana",
+    "Turtle",
+    "Tortoise",
+    "Shark",
+    "Ray",
+    "Catfish",
+    "Swordfish",
+    "Tuna",
+    "Salmon",
+    "Shark",
+    "Whales",
+    "Dolphin",
+    "Porpoise",
+    "Walrus",
+    "Seal",
+    "Sealion",
+    "Manatee",
+    "Meerkat",
+    "Kangaroo",
+    "Platypus",
+    "Opossum",
+    "Possum",
+    "Raccoon",
+    "Skunk",
+    "Badger",
+    "Ferret",
+    "Weasel",
+    "Otter",
+    "Muskrat",
+    "Martin",
+    "Beaver",
+    "Squirrel",
+    "Chipmunk",
+    "Porcupine",
+    "Hedgehog",
+    "Antelope",
+    "Gazelle",
+    "Elk",
+    "Moose",
+    "Caribou",
+    "Mule deer",
+    "Pronghorn",
+    "Bison",
+],
+    countries:[
+    "Afghanistan", 
+    "Albania", 
+    "Algeria", 
+    "Andorra", 
+    "Angola",
+    "Antigua",
+    "Argentina",
+    "Armenia",
+    "Australia", 
+    "Austria", 
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain", 
+    "Bangladesh",
+    "Barbados",
+    "Belarus", 
+    "Belgium", 
+    "Belize", 
+    "Benin", 
+    "Bhutan", 
+    "Bolivia", 
+    "Botswana", 
+    "Brazil", 
+    "Brunei", 
+    "Bulgaria", 
+    "Burundi",
+    "Cambodia", 
+    "Cameroon",
+    "Canada",
+    "Chad",
+    "Chile",
+    "China",
+    "Colombia", 
+    "Comoros",
+    "Congo", 
+    "CostaRica", 
+    "Croatia", 
+    "Cuba",
+    "Cyprus",
+    "CzechRepublic", 
+    "Denmark",
+    "Djibouti",
+    "Dominica",
+    "Ecuador",
+    "Egypt",
+    "ElSalvador", 
+    "Eritrea",
+    "Estonia",
+    "Ethiopia",
+    "Fiji", 
+    "Finland", 
+    "France", 
+    "Gabon",
+    "Gambia", 
+    "Georgia",
+    "Germany",
+    "Ghana", 
+    "Greece"
+    ]
+    }
+    
+    const categoriesBtns = document.querySelectorAll(".cat-btn");
+    const page = document.querySelector("#bg");
+    const kbBtns = document.querySelectorAll(".char-btns");
+    const outputDiv = document.querySelector("#output");
+    const bodyParts = document.querySelectorAll(".hbody");
+    const hangman = document.querySelector("#hangman-body");
+    const resultDiv = document.querySelector("#resultdiv");
+    const result = document.querySelector("#res");
+    const cWord = document.querySelector("#c-word");
+    const introH1 = document.querySelector("#intro-h1");
+    const introPage = document.querySelector("#intro-pg");
+    const againBtn = document.querySelector("#again-btn");
+    let index = 0;
+    let currentLetters;
+    let currentWord;
+    
+    
+    //setTimeout to display introPage
+
+    introH1.addEventListener("animationend",() => {
+    
+        introPage.style.display = "none";
+        
+    });        
+        
+       //program for category button to stop selecting on single selection 
+              
+        const disableAllCategoryBtns = () => {
+            
+            categoriesBtns.forEach(elm => {
+                elm.classList.add("disable-btn");
+            })
+            
+        }
+        
+        const enableAllCategoryBtns = () => {
+            
+            categoriesBtns.forEach(elm => {
+                elm.classList.remove("disable-btn");
+                if(elm.classList.contains("selected-cat"))
+                    elm.classList.remove("selected-cat");
+            })
+            
+        }
+                        
+        categoriesBtns.forEach(elm => {
+        
+            elm.addEventListener("click",() => {
+                
+                if(!elm.classList.contains("disable-btn")){
+                    
+                    disableAllCategoryBtns();
+                    page.classList.add("playing");
+                    elm.classList.add("selected-cat");
+                    setAWord(elm.id);
+                    
+                }
+                
+            })
+            
+        });
+        
+        //program for keyboard button to hide once it is clicked and to return the clicked character
+        
+        kbBtns.forEach(elm => {
+            
+            elm.addEventListener("click",() => {
+                
+                if(!elm.classList.contains("kb-disable")){
+                    elm.classList.add("kb-disable");   
+                    check(elm.id);                 
+                }            
+                
+            })
+            
+        })
+        
+        const enableAllkbBtns = () => {
+            
+            kbBtns.forEach(elm => {
+                
+                if(elm.classList.contains("kb-disable"))
+                    elm.classList.remove("kb-disable");                                      
+                
+            })
+            
+        }
+        
+        //function to select a random word
+
+        const setAWord = (category) => {
+            
+            let index = Math.floor(Math.random() * namesData[category].length);
+            let curWord = namesData[category][index].toUpperCase();
+            currentWord = curWord;
+            
+            let strOfHTML = ``;
+            for(let i = 0;i < curWord.length;i++)
+                strOfHTML += `<div id = ${curWord[i]} class = "letter">_</div>`;
+            
+            outputDiv.innerHTML= strOfHTML;
+            currentLetters = document.querySelectorAll(".letter");
+            
+        }
+        
+        //To check if the clicked character is in the word if not add body parts to hangman
+        
+        const check = (curChar) => {
+        
+            let contains = false;
+            
+            currentLetters.forEach(elm => {
+                
+                if(curChar.toUpperCase() == elm.id){                
+                    elm.textContent = elm.id;
+                    elm.classList.add("letter-shown");
+                    contains = true;
+                }
+                                                                                
+            });
+            
+            if(!contains) addBodyParts();
+            else checkForWin();
+            
+        }
+        
+        //function to add body parts
+
+        let countBodyParts = 0;
+        let count = 1;
+
+        const addBodyParts = () => {
+            
+            if(count % 2 == 0){
+                                bodyParts[countBodyParts].classList.add("display");
+               countBodyParts++;   
+               checkForGameOver();   
+          
+            }
+            
+            count++;
+                            
+        }
+        
+        const removeBodyParts = () => {
+            
+            bodyParts.forEach(elm => {
+            
+                if(elm.classList.contains("display"))
+                    elm.classList.remove("display");
+                
+            })
+            
+        }
+    
+        //Check for game over
+
+        const checkForGameOver = () => {
+            
+            if(countBodyParts == 6){
+                
+                hangman.classList.add("dead");
+                outputDiv.classList.add("incorrect");
+                disableClick();
+                displayResult(false);
+                
+            }
+            
+        }
+        
+        //Check for win
+        
+        const checkForWin = () => {
+            
+           let won = Array.from(currentLetters).every(elm => elm.classList.contains("letter-shown"));
+           
+           if(won){
+               outputDiv.classList.add("correct");
+               disableClick();
+               displayResult(true);
+           }
+            
+        }
+        
+        //disable click
+
+        const disableClick = () => {
+            page.style.pointerEvents = "none";
+        }
+        
+        //enable click
+
+        const enableClick = () => {
+            page.style.pointerEvents = "auto";
+        }
+        
+        //display result
+
+        const displayResult = (won) => {
+         
+            if(won){
+                
+                result.textContent = "You Won !";
+                cWord.style.color = "green";
+                
+         
+            }else{
+            
+                result.textContent = "You Lose !";
+                cWord.style.color = "red";
+                
+            }
+            
+            cWord.textContent = currentWord;
+            
+            if(resultDiv.classList.contains("animate-up"))
+                resultDiv.classList.remove("animate-up");
+                
+            resultDiv.classList.add("animate-down");
+            
+        }
+        
+        againBtn.addEventListener("click",() => resetGame());
+        
+        //reset game
+
+        const resetGame = () => {
+            
+            page.classList.remove("playing");
+            enableAllCategoryBtns();
+            enableAllkbBtns();
+            enableClick();
+            removeBodyParts();
+            countBodyParts = 0;
+            count = 1;
+            hangman.className = "hangman";
+            outputDiv.className = "output-div";
+            resultDiv.classList.remove("animate-down");
+            resultDiv.classList.add("animate-up");
+            
+            
+        }
+        
+        
+    </script>
+    
+</html>
+
+
